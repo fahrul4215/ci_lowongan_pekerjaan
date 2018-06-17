@@ -6,5 +6,5 @@ Tugas Besar CodeIgniter
 Tema : Lowongan Pekerjaan
 
 MI2A
-1. Bhaktiar Adi Nugroho
+1. Bhaktiar Adi Nugraha
 2. Muchammad Fahrul Yurisnan
