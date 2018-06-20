@@ -7,14 +7,14 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('user');
-		if ($this->session->userdata('masuk')) {
-			// redirect('welcome','refresh');
-		}
+		// if ($this->session->userdata('masuk')) {
+		// 	redirect('welcome');
+		// }
 	}
 
 	public function index()
 	{
-		$this->load->view('viewLogin');
+		$this->load->view('login/viewLogin');
 	}
 
 	public function cekDb($password)
@@ -53,6 +53,25 @@ class Login extends CI_Controller {
 		$this->session->unset_userdata('masuk');
 		$this->session->sess_destroy();
 		redirect('login','refresh');
+	}
+
+	public function daftar($level)
+	{
+		$this->load->view('login/viewDaftar');
+
+		if ($this->input->post('submit')) {
+			$this->form_validation->set_rules('username', 'Username', 'trim|required');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required');
+			$this->form_validation->set_rules('konfirmasiPassword', 'Konfirmasi Password', 'trim|required|matches[password]');
+			
+			if ($this->form_validation->run() == FALSE) {
+				$this->load->view('login/viewDaftar');
+			} else {
+				$this->user->daftar();
+				redirect('login','refresh');
+			}
+		}
+
 	}
 
 }

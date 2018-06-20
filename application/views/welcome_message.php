@@ -70,6 +70,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div id="container">
+	<!-- <?= var_dump($sess) ?> -->
+	<?= $sess['username'] ?>
 	<h1>Welcome to CodeIgniter!</h1>
 
 	<div id="body">
