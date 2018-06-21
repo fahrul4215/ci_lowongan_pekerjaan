@@ -24,12 +24,15 @@ class User extends CI_Model {
 		}
 	}
 
-	public function daftar()
+	public function daftar($level)
 	{
 		$object = array(
-			'username' => $this->input->post('username'),
-			'password' => md5($this->input->post('password'))
+			'username'	=> $this->input->post('username'),
+			'password'	=> md5($this->input->post('password')),
+			'level'		=> $level
 		);
+
+		$this->db->insert('user', $object);
 	}
 
 }

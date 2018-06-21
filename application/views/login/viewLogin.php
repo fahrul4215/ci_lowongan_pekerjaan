@@ -59,10 +59,10 @@
 					<div class="modal-body text-center">
 						<h3>Daftar Sebagai</h3>
 						<br>
-						<a href="<?php echo base_url() ?>index.php/login/daftar/3" class="btn btn-primary">
+						<a href="<?php echo base_url() ?>index.php/login/daftar/2" class="btn btn-primary">
 							Member
 						</a>
-						<a href="<?php echo base_url() ?>index.php/login/daftar/2" class="btn btn-primary">
+						<a href="<?php echo base_url() ?>index.php/login/daftar/3" class="btn btn-primary">
 							Perusahaan
 						</a>
 					</div>

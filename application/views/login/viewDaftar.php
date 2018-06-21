@@ -1,3 +1,4 @@
+<?php $level = $this->uri->segment(3); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -16,9 +17,10 @@
 					<div class="login100-more" style="background-image: url('<?= base_url('assets/images/job.jpg') ?>');">
 					</div>
 
-					<?php echo form_open('login/daftar/'.$this->uri->segment(3), 'class="login100-form validate-form"'); ?>
+					<?php echo form_open('login/create/'.$level, 'class="login100-form validate-form"'); ?>
 						<span class="login100-form-title p-b-43">
-							Daftar Sebagai Member
+							Daftar Sebagai
+							<?= ($level == 2 ) ? 'Member' : 'Perusahaan'; ?>
 						</span>
 
 						<div class="text-danger text-center">
@@ -36,7 +38,7 @@
 							<span class="label-input100">Password</span>
 						</div>
 						<div class="wrap-input100">
-							<input class="input100" type="password" name="kofirmasiPassword">
+							<input class="input100" type="password" name="konfirmasiPassword">
 							<span class="focus-input100"></span>
 							<span class="label-input100">Kofirmasi Password</span>
 						</div>

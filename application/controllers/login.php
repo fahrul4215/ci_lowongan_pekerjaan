@@ -7,9 +7,14 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('user');
-		// if ($this->session->userdata('masuk')) {
-		// 	redirect('welcome');
-		// }
+
+		if ($this->uri->segment(2) == 'logout') {
+			return;
+		}
+
+		if ($this->session->userdata('masuk')) {
+			redirect('welcome','refresh');
+		}
 	}
 
 	public function index()
@@ -42,7 +47,7 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('username', 'Username', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_cekDb');
 		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('viewLogin');
+			$this->load->view('login/viewLogin');
 		} else {
 			redirect('welcome','refresh');
 		}
@@ -58,20 +63,31 @@ class Login extends CI_Controller {
 	public function daftar($level)
 	{
 		$this->load->view('login/viewDaftar');
+	}
 
-		if ($this->input->post('submit')) {
-			$this->form_validation->set_rules('username', 'Username', 'trim|required');
-			$this->form_validation->set_rules('password', 'Password', 'trim|required');
-			$this->form_validation->set_rules('konfirmasiPassword', 'Konfirmasi Password', 'trim|required|matches[password]');
-			
-			if ($this->form_validation->run() == FALSE) {
-				$this->load->view('login/viewDaftar');
-			} else {
-				$this->user->daftar();
-				redirect('login','refresh');
-			}
+	public function create($level)
+	{
+		$this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[user.username]',
+			array(
+				'required' 		=> 'kolom %s tidak boleh kosong!!!!!!!',
+				'is_unique'		=> 'isi dari kolom %s sudah ada'
+			));
+		$this->form_validation->set_rules('password', 'Password', 'trim|required',
+			array(
+				'required' 		=> 'kolom %s tidak boleh kosong!!!!!!!',
+			));
+		$this->form_validation->set_rules('konfirmasiPassword', 'Konfirmasi Password', 'trim|required|matches[password]',
+			array(
+				'required' 		=> 'kolom %s tidak boleh kosong!!!!!!!',
+				'matches'		=> '%s tidak sesuai'
+			));
+		
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('login/viewDaftar');
+		} else {
+			$this->user->daftar($level);
+			redirect('login','refresh');
 		}
-
 	}
 
 }

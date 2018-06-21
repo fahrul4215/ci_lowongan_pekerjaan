@@ -18,6 +18,16 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+	public function __construct()
+	{
+		parent::__construct();
+		//Do your magic here
+		if (!$this->session->userdata('masuk')) {
+			redirect('login','refresh');
+		}
+	}
+
 	public function index()
 	{
 		$data["sess"] = $this->session->userdata('masuk');
