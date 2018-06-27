@@ -2307,7 +2307,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .banner-content {
-  margin-top: -90px;
+  margin-top: 0;
   text-align: center;
 }
 

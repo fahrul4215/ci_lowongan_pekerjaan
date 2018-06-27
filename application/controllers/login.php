@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 		}
 
 		if ($this->session->userdata('masuk')) {
-			redirect('welcome','refresh');
+			redirect('home','refresh');
 		}
 	}
 
@@ -49,7 +49,7 @@ class Login extends CI_Controller {
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('login/viewLogin');
 		} else {
-			redirect('welcome','refresh');
+			redirect('home','refresh');
 		}
 	}
 
