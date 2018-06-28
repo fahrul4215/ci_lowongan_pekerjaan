@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="id" class="no-js">
 	<head>
+		<!-- Site Title -->
+		<title>Lowongan Pekerjaan</title>
+
 		<?php include 'head.php'; ?>
 	</head>
 	<body>
@@ -13,7 +16,7 @@
 				<div class="row fullscreen d-flex align-items-center justify-content-center">
 					<div class="banner-content col-lg-12">
 						<h1 class="text-white">
-							<span>1500+</span> Jobs posted last week				
+							<span><?= $numLowongan ?></span> Jobs Ready to Apply
 						</h1>	
 						<!-- <form action="search.html" class="serach-form-area">
 							<div class="row justify-content-center form-wrap">
@@ -54,84 +57,21 @@
 					<div class="container">
 						<div class="row align-items-center">
 							<div class="active-popular-post-carusel">
-								<div class="single-popular-post d-flex flex-row">
-									<div class="thumb">
-										<img class="img-fluid" src="<?= base_url('assets/home/') ?>img/p1.png" alt="">
-										<a class="btns text-uppercase" href="#">view job post</a>
+								<?php foreach ($newLowongan as $value): ?>
+									<div class="single-popular-post d-flex flex-row">
+										<div class="thumb">
+											<img class="img-fluid" src="<?= base_url('assets/home/') ?>img/i8.jpg" alt="">
+											<a class="btns text-uppercase" href="#">view job post</a>
+										</div>
+										<div class="details">
+											<a href="#"><h4><?= $value->lowongan ?></h4></a>
+											<h6><?= $value->kota ?></h6>
+											<p>
+												<?= $value->deskripsi ?>
+											</p>
+										</div>
 									</div>
-									<div class="details">
-										<a href="#"><h4>Creative Designer</h4></a>
-										<h6>Los Angeles</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis.
-										</p>
-									</div>
-								</div>	
-								<div class="single-popular-post d-flex flex-row">
-									<div class="thumb">
-										<img src="<?= base_url('assets/home/') ?>img/p2.png" alt="">
-										<a class="btns text-uppercase" href="#">view job post</a>
-									</div>
-									<div class="details">
-										<a href="#"><h4>Creative Designer</h4></a>
-										<h6>Los Angeles</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis.
-										</p>
-									</div>
-								</div>
-								<div class="single-popular-post d-flex flex-row">
-									<div class="thumb">
-										<img src="<?= base_url('assets/home/') ?>img/p1.png" alt="">
-										<a class="btns text-uppercase" href="#">view job post</a>
-									</div>
-									<div class="details">
-										<a href="#"><h4>Creative Designer</h4></a>
-										<h6>Los Angeles</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis.
-										</p>
-									</div>
-								</div>	
-								<div class="single-popular-post d-flex flex-row">
-									<div class="thumb">
-										<img src="<?= base_url('assets/home/') ?>img/p2.png" alt="">
-										<a class="btns text-uppercase" href="#">view job post</a>
-									</div>
-									<div class="details">
-										<a href="#"><h4>Creative Designer</h4></a>
-										<h6>Los Angeles</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis.
-										</p>
-									</div>
-								</div>	
-								<div class="single-popular-post d-flex flex-row">
-									<div class="thumb">
-										<img src="<?= base_url('assets/home/') ?>img/p1.png" alt="">
-										<a class="btns text-uppercase" href="#">view job post</a>
-									</div>
-									<div class="details">
-										<a href="#"><h4>Creative Designer</h4></a>
-										<h6>Los Angeles</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis.
-										</p>
-									</div>
-								</div>	
-								<div class="single-popular-post d-flex flex-row">
-									<div class="thumb">
-										<img src="<?= base_url('assets/home/') ?>img/p2.png" alt="">
-										<a class="btns text-uppercase" href="#">view job post</a>
-									</div>
-									<div class="details">
-										<a href="#"><h4>Creative Designer</h4></a>
-										<h6>Los Angeles</h6>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis.
-										</p>
-									</div>
-								</div>																																							
+								<?php endforeach ?>
 							</div>
 						</div>
 					</div>	
@@ -192,60 +132,22 @@
 				<div class="row d-flex justify-content-center">
 					<div class="menu-content pb-60 col-lg-10">
 						<div class="title text-center">
-							<h1 class="mb-10">Featured Job Categories</h1>
+							<h1 class="mb-10">Kategori Pekerjaan</h1>
 							<p>Who are in extremely love with eco friendly system.</p>
 						</div>
 					</div>
 				</div>						
 				<div class="row">
-					<div class="col-lg-2 col-md-4 col-sm-6">
-						<div class="single-fcat">
-							<a href="category.html">
-								<img src="<?= base_url('assets/home/') ?>img/o1.png" alt="">
-							</a>
-							<p>Accounting</p>
+					<?php foreach ($kategori as $value): ?>
+						<div class="col-lg-2 col-md-4 col-sm-6">
+							<div class="single-fcat">
+								<a href="#<?= $value->idKategori ?>">
+									<img src="<?= base_url('assets/home/img/'.$value->gambar) ?>">
+								</a>
+								<p><?= $value->namaKategori ?></p>
+							</div>
 						</div>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-6">
-						<div class="single-fcat">
-							<a href="category.html">
-								<img src="<?= base_url('assets/home/') ?>img/o2.png" alt="">
-							</a>
-							<p>Development</p>
-						</div>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-6">
-						<div class="single-fcat">
-							<a href="category.html">
-								<img src="<?= base_url('assets/home/') ?>img/o3.png" alt="">
-							</a>
-							<p>Technology</p>
-						</div>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-6">
-						<div class="single-fcat">
-							<a href="category.html">
-								<img src="<?= base_url('assets/home/') ?>img/o4.png" alt="">
-							</a>
-							<p>Media & News</p>
-						</div>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-6">
-						<div class="single-fcat">
-							<a href="category.html">
-								<img src="<?= base_url('assets/home/') ?>img/o5.png" alt="">
-							</a>
-							<p>Medical</p>
-						</div>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-6">
-						<div class="single-fcat">
-							<a href="category.html">
-								<img src="<?= base_url('assets/home/') ?>img/o6.png" alt="">
-							</a>
-							<p>Goverment</p>
-						</div>			
-					</div>																											
+					<?php endforeach ?>
 				</div>
 			</div>	
 		</section>
@@ -259,10 +161,11 @@
 						<ul class="cat-list">
 							<li><a href="#">Recent</a></li>
 							<li><a href="#">Full Time</a></li>
-							<li><a href="#">Intern</a></li>
-							<li><a href="#">part Time</a></li>
+							<li><a href="#">Part Time</a></li>
+							<li><a href="#">Magang</a></li>
 						</ul>
-						<div class="single-post d-flex flex-row">
+
+						<!-- <div class="single-post d-flex flex-row">
 							<div class="thumb">
 								<img src="<?= base_url('assets/home/') ?>img/post.png" alt="">
 								<ul class="tags">
@@ -295,7 +198,48 @@
 								<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
 								<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
 							</div>
-						</div>
+						</div> -->
+
+						<table id="lowongan" class="table table-hover">
+							<thead>
+					            <tr>
+					            	<th>Tgl</th>
+					                <th>Lowongan</th>
+					                <th>Deskripsi</th>
+					                <th>Perusahaan</th>
+					                <th>Gaji</th>
+					                <th>Kota</th>
+					                <th>Jam Kerja</th>
+					                <th>Aksi</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+					        	<?php foreach ($lowongan as $value): ?>	
+									<tr>
+										<td><?= date('d-m-Y', strtotime($lowongan[0]->tglPost)) ?></td>
+										<td><?= $value->lowongan ?></td>
+										<td><?= $value->deskripsi ?></td>
+										<td><?= $value->namaPerusahaan ?></td>
+										<td><?= $value->gaji ?></td>
+										<td><?= $value->kota ?></td>
+										<td><?= $value->jamKerja ?></td>
+										<td>
+											<a href="<?= base_url('index.php/home/single/'.$value->idLowongan) ?>" class="btn btn-success">Lihat</a>
+										</td>
+						            </tr>
+					        	<?php endforeach ?>
+					        </tbody>
+					        <!-- <tfoot>
+					            <tr>
+					                <th>Name</th>
+					                <th>Position</th>
+					                <th>Office</th>
+					                <th>Age</th>
+					                <th>Start date</th>
+					                <th>Salary</th>
+					            </tr>
+					        </tfoot> -->
+						</table>
 						
 						<a class="text-uppercase loadmore-btn mx-auto d-block" href="category.html">Load More job Posts</a>
 

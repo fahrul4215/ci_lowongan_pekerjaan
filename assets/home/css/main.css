@@ -2473,11 +2473,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .single-popular-post .thumb {
   display: inline-block;
+  margin-right: 35px;
 }
 
 .single-popular-post .thumb img {
-  margin-top: 10px;
-  margin-left: 5px;
+  /* margin-top: 10px; */
+  width: 75px;
+  margin-left: 10px;
 }
 
 .single-popular-post .btns {
@@ -3808,6 +3810,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .blog-banner-wrap {
   text-align: center;
+}
+
+.single-post .thumb {
+  margin-right: 25px;
 }
 
 .blog-post-list .single-post {

@@ -4,11 +4,10 @@
 <link rel="shortcut icon" href="<?= base_url('assets/home/img/fav.ico') ?>">
 <!-- meta character set -->
 <meta charset="UTF-8">
-<!-- Site Title -->
-<title>Lowongan Pekerjaan</title>
 
 <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
 <!-- ====================== CSS ======================= -->
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/datatables/datatables.min.css') ?>"/>
 <link rel="stylesheet" href="<?= base_url('assets/home/css/linearicons.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/home/css/font-awesome.min.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/home/css/bootstrap.css') ?>">
