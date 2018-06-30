@@ -61,10 +61,10 @@
 									<div class="single-popular-post d-flex flex-row">
 										<div class="thumb">
 											<img class="img-fluid" src="<?= base_url('assets/home/') ?>img/i8.jpg" alt="">
-											<a class="btns text-uppercase" href="#">view job post</a>
+											<a class="btns text-uppercase" href="<?= base_url('index.php/home/single/'.$value->idLowongan) ?>">view job post</a>
 										</div>
 										<div class="details">
-											<a href="#"><h4><?= $value->lowongan ?></h4></a>
+											<h4><?= $value->lowongan ?></h4>
 											<h6><?= $value->kota ?></h6>
 											<p>
 												<?= $value->deskripsi ?>
@@ -241,7 +241,7 @@
 					        </tfoot> -->
 						</table>
 						
-						<a class="text-uppercase loadmore-btn mx-auto d-block" href="category.html">Load More job Posts</a>
+						<!-- <a class="text-uppercase loadmore-btn mx-auto d-block" href="category.html">Load More job Posts</a> -->
 
 					</div>
 					<!-- <div class="col-lg-4 sidebar">

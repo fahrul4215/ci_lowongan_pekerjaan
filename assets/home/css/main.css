@@ -6,6 +6,11 @@
 /* =================================== */
 /*  Basic Style 
 /* =================================== */
+#pesan {
+  padding: 0 !important;
+  margin-top: 5px;
+}
+
 ::-moz-selection {
   /* Code for Firefox */
   background-color: #49e4fa;

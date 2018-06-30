@@ -31,9 +31,11 @@ class Login extends CI_Controller {
 			foreach ($result as $value) {
 				$session = array(
 					'idUser' 	=> $value->idUser,
-					'username' 	=> $value->username
+					'username' 	=> $value->username,
+					'level'		=> $value->level
 				);
 				$this->session->set_userdata('masuk', $session);
+				$this->session->set_flashdata('dahMasuk', 'Berhasil Login');
 			}
 			return true;
 		} else {
@@ -56,8 +58,9 @@ class Login extends CI_Controller {
 	public function logout()
 	{
 		$this->session->unset_userdata('masuk');
-		$this->session->sess_destroy();
-		redirect('login','refresh');
+		// $this->session->sess_destroy();
+		$this->session->set_flashdata('dahKeluar', 'Anda Telah Logout');
+		redirect('login');
 	}
 
 	public function daftar($level)

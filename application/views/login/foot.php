@@ -7,3 +7,8 @@
 <script src="<?= base_url() ?>assets/vendor/daterangepicker/daterangepicker.js"></script>
 <script src="<?= base_url() ?>assets/vendor/countdowntime/countdowntime.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
+<script type="text/javascript">
+	setTimeout(function(){
+		document.getElementById('pesan').style.display = 'none';
+	}, 5000);
+</script>

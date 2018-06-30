@@ -35,6 +35,20 @@ class User extends CI_Model {
 		$this->db->insert('user', $object);
 	}
 
+	public function getUser($id, $level)
+	{
+		$this->db->from('user');
+		if ($level == 2) {
+			$this->db->join('member', 'user.idUser = member.fkUser');
+		} else if ($level ==3) {
+			$this->db->join('perusahaan', 'user.idUser = perusahaan.fkUser');
+			$this->db->join('jenis_perusahaan', 'perusahaan.idJenisPerusahaan = jenis_perusahaan.idJenisPerusahaan');
+		}
+		$this->db->where('idUser', $id);
+
+		return $this->db->get()->result();
+	}
+
 }
 
 /* End of file user.php */

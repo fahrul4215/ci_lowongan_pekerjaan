@@ -91,4 +91,8 @@
 	$(document).ready(function() {
 	    $('#lowongan').DataTable();
 	} );
+
+	setTimeout(function(){
+		document.getElementById('pesan').style.display = 'none';
+	}, 5000);
 </script>

@@ -14,6 +14,12 @@
 			<div class="container-login100">
 				<div class="wrap-login100">
 					<?php echo form_open('login/cekLogin', 'class="login100-form validate-form"'); ?>
+						<div class="container-fluid" id="pesan">
+							<?php if ($this->session->flashdata('dahKeluar')): ?>
+								<p class="alert alert-danger"><?= $this->session->flashdata('dahKeluar') ?></p>
+							<?php endif ?>
+						</div>
+						
 						<span class="login100-form-title p-b-43">
 							Login untuk Melanjutkan
 						</span>
@@ -38,6 +44,10 @@
 						<p class="text-center">Or</p>
 						<div class="container-login100-form-btn">
 							<a href="#modal-id" data-toggle="modal" class="login100-form-btn" style="background-color: #0d0">Sign Up</a>
+						</div>
+						<br>
+						<div class="container-login100-form-btn">
+							<a href="<?= base_url('index.php/home') ?>" class="login100-form-btn" style="background-color: #f00">Batal</a>
 						</div>
 
 					<!-- <?php form_close(); ?> -->
