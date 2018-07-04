@@ -42,7 +42,19 @@ class Home extends CI_Controller {
 		// }
 		$data['userMasuk'] = $this->data;
 		$data['user'] = $this->data;
+		if (isset($data['user'][0]->idPerusahaan)) {
+			$idPerusahaan = $data['user'][0]->idPerusahaan;
+		} else {
+			$idPerusahaan = 0;
+		}
+		$data['lowongan'] = $this->lowongan->getLowongan('', 0 , 0, $idPerusahaan, 5);
 		$this->load->view('home/profil', $data);
+	}
+
+	public function editProfil()
+	{
+		$data['userMasuk'] = $this->data;
+		$this->load->view('home/editProfil', $data);
 	}
 
 }

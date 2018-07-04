@@ -7,7 +7,6 @@
 			<nav id="nav-menu-container">
 				<ul class="nav-menu">
 					<li class="menu-active"><a href="<?= base_url() ?>">Home</a></li>
-					<li><a href="<?= base_url('index.php/home/profil') ?>">Profile</a></li>
 					<!-- <li class="menu-has-children"><a href="">Pages</a>
 						<ul>
 							<li><a href="elements.html">elements</a></li>
@@ -16,6 +15,12 @@
 						</ul>
 					</li> -->
 					<?php if ($this->session->userdata('masuk')): ?>
+						<?php if (!isset($userMasuk[0])): ?>
+							<li><a href="<?= base_url('index.php/home/profil/edit') ?>">Edit Profile</a></li>
+						<?php endif ?>
+						<?php if (isset($userMasuk[0]->namaMember) || isset($userMasuk[0]->namaPerusahaan)): ?>
+							<li><a href="<?= base_url('index.php/home/profil') ?>">Profile</a></li>
+						<?php endif ?>
 						<li style="color: #fff">
 							Halo, 
 							<?php 
@@ -23,8 +28,10 @@
 									echo $userMasuk[0]->namaMember;
 								} else if(isset($userMasuk[0]->namaPerusahaan)) {
 									echo $userMasuk[0]->namaPerusahaan;
-								} else {
+								} else if(isset($userMasuk[0]->level) && $userMasuk[0]->level == 1){
 									echo 'Admin';
+								} else {
+									echo 'new user';
 								}
 							?>
 							<a class="ticker-btn" href="<?= base_url('index.php/login/logout') ?>">Logout</a>

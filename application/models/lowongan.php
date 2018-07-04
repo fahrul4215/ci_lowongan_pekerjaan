@@ -18,9 +18,10 @@ class Lowongan extends CI_Model {
 		return $this->db->get()->result();
 	}
 
-	public function getLowongan($get, $getkat = 0, $kategori = 0)
+	public function getLowongan($get, $getkat = 0, $kategori = 0, $idPerusahaan = 0, $limit = 0)
 	{
 		$this->db->join('perusahaan', 'lowongan.idPerusahaan = perusahaan.idPerusahaan', 'left');
+		$this->db->join('kategori_pekerjaan', 'kategori_pekerjaan.idKategori = lowongan.fkKategori');
 		$this->db->where('status', 'buka');
 		$this->db->where('kuota >', 0);
 		if ($get > 0) {
@@ -29,6 +30,12 @@ class Lowongan extends CI_Model {
 		if ($kategori > 0) {
 			$this->db->where('idLowongan !=', $getkat);
 			$this->db->where('fkKategori', $kategori);
+		}
+		if ($idPerusahaan > 0) {
+			$this->db->where('lowongan.idPerusahaan', $idPerusahaan);
+		}
+		if ($limit > 0) {
+			$this->db->limit($limit);
 		}
 		$query = $this->db->get('lowongan');
 
