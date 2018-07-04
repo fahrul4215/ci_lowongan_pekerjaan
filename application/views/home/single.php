@@ -41,7 +41,21 @@
 									</div>
 									<ul class="btns">
 										<li><?= date('d-m-Y', strtotime($lowongan[0]->tglPost)) ?></li>
-										<li><a href="<?= base_url('') ?>">Apply</a></li>
+										<?php if ($userMasuk[0]->level == 2): ?>
+											<?php 
+												$terdaftar = false;
+												foreach ($pendaftar as $value) {
+													if ($value->idLowongan == $lowongan[0]->idLowongan && $value->idMember == $userMasuk[0]->idMember) {
+														$terdaftar = true;
+													}
+												}
+											?>
+											<?php if ($terdaftar): ?>
+												<li><a href="#">Applied</a></li>										
+											<?php else: ?>
+												<li><a href="<?= base_url('index.php/home/apply/'.$lowongan[0]->idLowongan.'/'.$userMasuk[0]->idMember) ?>">Apply</a></li>
+											<?php endif ?>
+										<?php endif ?>
 									</ul>
 								</div>
 								<p>

@@ -1,3 +1,4 @@
+<?= var_dump($userMasuk) ?>
 <header id="header" id="home">
 	<div class="container">
 		<div class="row align-items-center justify-content-between d-flex">
@@ -40,5 +41,11 @@
 		<?php if ($masuk = $this->session->flashdata('dahMasuk')): ?>
 			<p class="alert alert-success"><?= $masuk ?></p>
 		<?php endif ?>
+		<?php if ($applied = $this->session->flashdata('applied')): ?>
+			<p class="alert alert-success"><?= $applied ?></p>
+		<?php endif ?>
+		<?php if ($dahApplied = $this->session->flashdata('dahApplied')): ?>
+			<p class="alert alert-danger"><?= $dahApplied ?></p>
+		<?php endif ?>
 	</div>
-</header><!-- #header -->
+</header><!-- #header

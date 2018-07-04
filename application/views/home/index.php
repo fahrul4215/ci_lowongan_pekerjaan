@@ -210,6 +210,7 @@
 					                <th>Gaji</th>
 					                <th>Kota</th>
 					                <th>Jam Kerja</th>
+					                <th>Kuota</th>
 					                <th>Aksi</th>
 					            </tr>
 					        </thead>
@@ -223,6 +224,7 @@
 										<td><?= $value->gaji ?></td>
 										<td><?= $value->kota ?></td>
 										<td><?= $value->jamKerja ?></td>
+										<td><?= $value->kuota ?></td>
 										<td>
 											<a href="<?= base_url('index.php/home/single/'.$value->idLowongan) ?>" class="btn btn-success">Lihat</a>
 										</td>

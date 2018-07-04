@@ -44,6 +44,34 @@ class Lowongan extends CI_Model {
 		return $this->db->get('kategori_pekerjaan', 6)->result();
 	}
 
+	public function updateKuotaLowongan($idLowongan, $isiBaru)
+	{
+		$data = array(
+			'kuota'	=> $isiBaru
+		);
+
+		$this->db->where('idLowongan', $idLowongan);
+		$this->db->update('lowongan', $data);
+	}
+
+	public function apply($idLowongan, $idMember)
+	{
+		$data = array(
+			'idMember'		=> $idMember,
+			'idLowongan'	=> $idLowongan,
+			'tglDaftar'		=> date('Y-m-d'),
+			'status'		=> 'baru',
+			'keterangan'	=> 'Belum di verifikasi'
+		);
+
+		$this->db->insert('pendaftar', $data);
+	}
+
+	public function getPendaftar()
+	{
+		return $this->db->get('pendaftar')->result();
+	}
+
 }
 
 /* End of file lowongan.php */

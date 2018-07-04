@@ -37,11 +37,11 @@ class User extends CI_Model {
 
 	public function getUser1($id, $level)
 	{
-		if($level==2){
-			$this->db->select('idUser,username,password,idMember,namaMember,jenisKelamin');
-		}else if($level==3){
+		// if($level==2){
+		// 	$this->db->select('idUser,username,password,idMember,namaMember,jenisKelamin');
+		// }else if($level==3){
 
-		}
+		// }
 		$this->db->from('user');
 		if ($level == 2) {
 			$this->db->join('member', 'user.idUser = member.fkUser');
