@@ -35,8 +35,13 @@ class User extends CI_Model {
 		$this->db->insert('user', $object);
 	}
 
-	public function getUser($id, $level)
+	public function getUser1($id, $level)
 	{
+		if($level==2){
+			$this->db->select('idUser,username,password,idMember,namaMember,jenisKelamin');
+		}else if($level==3){
+
+		}
 		$this->db->from('user');
 		if ($level == 2) {
 			$this->db->join('member', 'user.idUser = member.fkUser');
@@ -47,6 +52,28 @@ class User extends CI_Model {
 		$this->db->where('idUser', $id);
 
 		return $this->db->get()->result();
+	}
+
+	public function getUser($id)
+	{
+		$this->db->select('*');
+		$this->db->from('user as u');
+		$this->db->join('member as m', 'm.fkUser = u.idUser','INNER');
+		$this->db->where('u.idUser',$id);
+		return $this->db->get()->result();
+	}
+
+	public function updatefotom($id){
+	$file = $this->upload->data();
+		$data = array('fotoMember' => $file['file_name']);
+		$this->db->where('fkUser',$id);
+		$this->db->update('member',$data);
+	}
+
+	public function updateUser($id){
+		$data = array('namaMember' => $this->input->post('nama'),'alamat' => $this->input->post('alamat'),'tanggalLahir' => $this->input->post('tanggalLahir'),'agama' => $this->input->post('agama'),'noTelp' => $this->input->post('notelp'),'jenisKelamin' => $this->input->post('jkl'),'email' => $this->input->post('email'));
+		$this->db->where('fkUser',$id);
+		$this->db->update('member',$data);
 	}
 
 }
