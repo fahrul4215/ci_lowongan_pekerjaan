@@ -33,4 +33,10 @@ class Welcome extends CI_Controller {
 		$data["sess"] = $this->session->userdata('masuk');
 		$this->load->view('welcome_message', $data);
 	}
+
+	public function createPdf()
+	{
+		$this->load->library('pdf');
+		$this->pdf->load_view('home/printLowongan', $data);
+	}
 }

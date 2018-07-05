@@ -27,6 +27,18 @@ class Home extends CI_Controller {
 		$this->load->view('home/index', $data);
 	}
 
+	public function print()
+	{
+		$data['userMasuk'] = $this->data;
+		$data['newLowongan'] = $this->lowongan->getNewLowongan();
+		$data['numLowongan'] = $this->lowongan->getLowongan('num');
+		$data['lowongan'] = $this->lowongan->getLowongan('');
+		$data['kategori'] = $this->lowongan->getKategori();
+		
+		$this->load->library('pdf');
+		$this->pdf->load_view('home/printLowongan', $data);
+	}
+
 	public function single($id)
 	{
 		$data['userMasuk'] = $this->data;
@@ -61,6 +73,7 @@ class Home extends CI_Controller {
 
 	public function profil()
 	{
+		$data['userMasuk'] = $this->data;
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
 		$level =  $session_data['level'];

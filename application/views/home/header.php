@@ -1,4 +1,4 @@
-<?= var_dump($userMasuk) ?>
+<!-- <?= var_dump($userMasuk) ?> -->
 <header id="header" id="home">
 	<div class="container">
 		<div class="row align-items-center justify-content-between d-flex">
@@ -8,7 +8,6 @@
 			<nav id="nav-menu-container">
 				<ul class="nav-menu">
 					<li class="menu-active"><a href="<?= base_url() ?>">Home</a></li>
-					<li><a href="<?= base_url('index.php/home/profil') ?>">Profile</a></li>
 					<!-- <li class="menu-has-children"><a href="">Pages</a>
 						<ul>
 							<li><a href="elements.html">elements</a></li>
@@ -17,6 +16,7 @@
 						</ul>
 					</li> -->
 					<?php if ($this->session->userdata('masuk')): ?>
+						<li><a href="<?= base_url('index.php/home/profil') ?>">Profile</a></li>
 						<li style="color: #fff">
 							Halo, 
 							<?php 

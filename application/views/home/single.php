@@ -41,7 +41,7 @@
 									</div>
 									<ul class="btns">
 										<li><?= date('d-m-Y', strtotime($lowongan[0]->tglPost)) ?></li>
-										<?php if ($userMasuk[0]->level == 2): ?>
+										<?php if (isset($userMasuk[0]->level) && $userMasuk[0]->level == 2): ?>
 											<?php 
 												$terdaftar = false;
 												foreach ($pendaftar as $value) {
