@@ -87,9 +87,11 @@
 <script src="<?= base_url('assets/home/js/mail-script.js') ?>"></script>
 <script src="<?= base_url('assets/home/js/main.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/datatables/datatables.min.js') ?>"></script>
+<script src="<?= base_url() ?>assets/jsgrid/jsgrid.min.js"></script>
+<script src="<?= base_url() ?>assets/jsgrid/lowonganJsGrid.js"></script>
 <script>
 	$(document).ready(function() {
-	    $('#lowongan').DataTable();
+		$('#lowongan').DataTable();
 	} );
 
 	setTimeout(function(){

@@ -10,7 +10,8 @@ class Home extends CI_Controller {
 		parent::__construct();
 		$this->load->model('lowongan');
 		$this->load->model('user');
-		if ($this->session->userdata('masuk')) {
+		if ($this->session->userdata('masuk'))
+		{
 			$id = $this->session->userdata('masuk')['idUser'];
 			$level = $this->session->userdata('masuk')['level'];
 			$this->data = $this->user->getUser1($id, $level);
@@ -69,18 +70,17 @@ class Home extends CI_Controller {
 		}
 	}
 
-	
-
 	public function profil()
 	{
 		$data['userMasuk'] = $this->data;
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
 		$level =  $session_data['level'];
-		$data['user'] = $this->user->getUser($id);
 		if($level==2){
+			$data['user'] = $this->user->getUser($id);
 			$this->load->view('home/profil_user', $data);
 		}else if($level==3){
+			$data['user'] = $this->user->getUser1($id, $level);
 			$this->load->view('home/profil_perusahaan', $data);
 		}
 	}
@@ -88,13 +88,13 @@ class Home extends CI_Controller {
 	public function updatemember(){
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
-		$this->form_validation->set_rules('nama', 'nama', 'trim|required');
-		$this->form_validation->set_rules('tanggalLahir', 'tanggalLahir', 'trim|required');
-		$this->form_validation->set_rules('email', 'email', 'trim|required');
-		$this->form_validation->set_rules('notelp', 'notelp', 'trim|required');
-		$this->form_validation->set_rules('agama', 'agama', 'trim|required');
-		$this->form_validation->set_rules('jkl', 'jkl', 'trim|required');
-		$this->form_validation->set_rules('alamat', 'alamt', 'trim|required');	
+		$this->form_validation->set_rules('nama', 'Nama', 'trim|required');
+		$this->form_validation->set_rules('tanggalLahir', 'Tanggal Lahir', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('notelp', 'Nomor Telepon', 'trim|required');
+		$this->form_validation->set_rules('agama', 'Agama', 'trim|required');
+		$this->form_validation->set_rules('jkl', 'Jenis Kelamin', 'trim|required');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');	
 		if ($this->form_validation->run() == FALSE) {
 			$this->form_validation->set_message('Update Profil', "Update Profil Gagal");
 
@@ -123,6 +123,54 @@ class Home extends CI_Controller {
 		$this->lowongan->updateKuotaLowongan($idLowongan, $kuotaBaru);
 		$this->session->set_flashdata('applied', 'Anda Telah Berhasil Apply Pekerjaan '.$lowongan[0]->lowongan);
 		redirect('home');
+	}
+
+	public function lowongan()
+	{
+		$data['userMasuk'] = $this->data;
+		$this->load->view('home/myLowongan', $data);
+	}
+
+	public function getGridLowongan()
+	{
+		$data['userMasuk'] = $this->data;
+		if (isset($data['userMasuk'][0]->idPerusahaan)) {
+			$result = $this->lowongan->getLowongan('',0,0,$data['userMasuk'][0]->idPerusahaan);
+		} else {
+			$result = $this->lowongan->getLowongan('',0,0,$data['userMasuk'][0]->idMember);
+		}
+
+		foreach ($result as $value) {
+			$value->tglPost = date('d-m-Y',strtotime($value->tglPost));
+		}
+
+		header("Content-Type: application/json");
+		echo json_encode($result);
+	}
+
+	public function getGridKategori()
+	{
+		$result = $this->lowongan->getKategori(0);
+		header("Content-Type: application/json");
+		echo json_encode($result);
+	}
+
+	public function insertGridLowongan()
+	{
+		$data['userMasuk'] = $this->data;
+		$this->lowongan->tambahLowongan($data['userMasuk'][0]->idPerusahaan);
+	}
+
+	public function updateGridLowongan()
+	{
+		$id = $this->input->post('idLowongan');
+		$this->lowongan->updateLowongan($id);
+	}
+
+	public function deleteGridLowongan()
+	{
+		$id = $this->input->post('idLowongan');
+		$this->lowongan->hapusLowongan($id);
 	}
 
 }

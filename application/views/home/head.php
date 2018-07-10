@@ -7,6 +7,9 @@
 
 <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
 <!-- ====================== CSS ======================= -->
+<!-- JSGrid -->
+<link rel="stylesheet" href="<?= base_url()?>assets/jsgrid/jsgrid.min.css">
+<link rel="stylesheet" href="<?= base_url()?>assets/jsgrid/jsgrid-theme.min.css">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/datatables/datatables.min.css') ?>"/>
 <link rel="stylesheet" href="<?= base_url('assets/home/css/linearicons.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/home/css/font-awesome.min.css') ?>">

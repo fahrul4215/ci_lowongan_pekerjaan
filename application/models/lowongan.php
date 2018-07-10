@@ -18,9 +18,10 @@ class Lowongan extends CI_Model {
 		return $this->db->get()->result();
 	}
 
-	public function getLowongan($get, $getkat = 0, $kategori = 0)
+	public function getLowongan($get, $getkat=0, $kategori=0, $idPerusahaan=0)
 	{
 		$this->db->join('perusahaan', 'lowongan.idPerusahaan = perusahaan.idPerusahaan', 'left');
+		$this->db->join('kategori_pekerjaan kp', 'lowongan.fkKategori = kp.idKategori', 'left');
 		$this->db->where('status', 'buka');
 		$this->db->where('kuota >', 0);
 		if ($get > 0) {
@@ -30,6 +31,10 @@ class Lowongan extends CI_Model {
 			$this->db->where('idLowongan !=', $getkat);
 			$this->db->where('fkKategori', $kategori);
 		}
+		if ($idPerusahaan > 0) {
+			$this->db->where('lowongan.idPerusahaan', $idPerusahaan);
+		}
+		$this->db->order_by('tglPost', 'desc');
 		$query = $this->db->get('lowongan');
 
 		if ($get == 'num') {
@@ -39,9 +44,9 @@ class Lowongan extends CI_Model {
 		}
 	}
 
-	public function getKategori()
+	public function getKategori($limit = 6)
 	{
-		return $this->db->get('kategori_pekerjaan', 6)->result();
+		return $this->db->get('kategori_pekerjaan', $limit)->result();
 	}
 
 	public function updateKuotaLowongan($idLowongan, $isiBaru)
@@ -70,6 +75,48 @@ class Lowongan extends CI_Model {
 	public function getPendaftar()
 	{
 		return $this->db->get('pendaftar')->result();
+	}
+
+	public function tambahLowongan($idPerusahaan)
+	{
+		$data = array(
+			'lowongan' => $this->input->post('lowongan'),
+			'deskripsi' => $this->input->post('deskripsi'),
+			'persyaratan' => $this->input->post('persyaratan'),
+			'idPerusahaan' => $idPerusahaan,
+			'tglPost' => date('Y-m-d'),
+			'status' => 'buka',
+			'gaji' => $this->input->post('gaji'),
+			'kota' => $this->input->post('kota'),
+			'jamKerja' => $this->input->post('jamKerja'),
+			'kuota' => $this->input->post('kuota'),
+			'fkKategori' => $this->input->post('fkKategori'),
+		);
+
+		$this->db->insert('lowongan', $data);
+	}
+
+	public function updateLowongan($id)
+	{
+		$data = array(
+			'lowongan' => $this->input->post('lowongan'),
+			'deskripsi' => $this->input->post('deskripsi'),
+			'persyaratan' => $this->input->post('persyaratan'),
+			'gaji' => $this->input->post('gaji'),
+			'kota' => $this->input->post('kota'),
+			'jamKerja' => $this->input->post('jamKerja'),
+			'kuota' => $this->input->post('kuota'),
+			'fkKategori' => $this->input->post('fkKategori'),
+		);
+
+		$this->db->where('idLowongan', $id);
+		$this->db->update('lowongan', $data);
+	}
+
+	public function hapusLowongan($id)
+	{
+		$this->db->where('idLowongan', $id);
+		$this->db->delete('lowongan');
 	}
 
 }

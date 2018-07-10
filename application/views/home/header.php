@@ -17,6 +17,7 @@
 					</li> -->
 					<?php if ($this->session->userdata('masuk')): ?>
 						<li><a href="<?= base_url('index.php/home/profil') ?>">Profile</a></li>
+						<li><a href="<?= base_url('index.php/home/lowongan') ?>">My Lowongan</a></li>
 						<li style="color: #fff">
 							Halo, 
 							<?php 
