@@ -10,11 +10,17 @@ class Home extends CI_Controller {
 		parent::__construct();
 		$this->load->model('lowongan');
 		$this->load->model('user');
+		if ($this->uri->segment(2) == 'profilBaru') {
+			return;
+		}
 		if ($this->session->userdata('masuk'))
 		{
 			$id = $this->session->userdata('masuk')['idUser'];
 			$level = $this->session->userdata('masuk')['level'];
 			$this->data = $this->user->getUser1($id, $level);
+			if (empty($this->data) && $level != 1) {
+				redirect('home/profilBaru/'.$level);
+			}
 		}
 	}
 
@@ -97,7 +103,6 @@ class Home extends CI_Controller {
 		$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');	
 		if ($this->form_validation->run() == FALSE) {
 			$this->form_validation->set_message('Update Profil', "Update Profil Gagal");
-
 		} else {
 			$this->user->updateUser($id);
 			redirect('home/profil','refresh');
@@ -171,6 +176,58 @@ class Home extends CI_Controller {
 	{
 		$id = $this->input->post('idLowongan');
 		$this->lowongan->hapusLowongan($id);
+	}
+
+	public function profilBaru($level)
+	{
+		$data['level'] = $level;
+		$data['jenisPerusahaan'] = $this->user->getJenisPerusahaan();
+		if ($level == 2) {
+			$this->form_validation->set_rules('nama', 'Nama', 'trim|required');
+			$this->form_validation->set_rules('tanggalLahir', 'Tanggal Lahir', 'trim|required');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required');
+			$this->form_validation->set_rules('notelp', 'Nomor Telepon', 'trim|required');
+			$this->form_validation->set_rules('agama', 'Agama', 'trim|required');
+			$this->form_validation->set_rules('jkl', 'Jenis Kelamin', 'trim|required');
+			$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');	
+		} elseif ($level == 3) {
+			$this->form_validation->set_rules('namaPerusahaan', 'Nama', 'trim|required');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required');
+			$this->form_validation->set_rules('noTelp', 'Nomor Telepon', 'trim|required');
+			$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');	
+		}
+		if ($this->form_validation->run() == FALSE) {
+			$this->form_validation->set_message('Input Profil', "Input Profil Gagal");
+		} else {
+			if ($this->input->post('inputProfil')) {
+				if ($level == 2) {
+					$config['upload_path']		='./assets/home/img/member/';
+				} elseif ($level == 3) {
+					$config['upload_path']		='./assets/home/img/perusahaan/';					
+				} else {
+					$config['upload_path']		='./assets/home/img/';
+				}
+				$config['allowed_types']		='jpg|png';
+				$config['max_width']			= 10240;
+				$config['max_height']			= 7680;
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if(!$this->upload->do_upload('gambar'))
+				{
+					$data['error'] = array('error' => $this->upload->display_errors());
+				}else{
+					$idUser = $this->session->userdata('masuk')['idUser'];
+					if ($level == 2) {
+						$this->user->insertMember($idUser);
+					} elseif ($level == 3) {
+						$this->user->insertPerusahaan($idUser);
+					}
+					redirect('home');
+				}
+			}
+		}
+		$this->load->view('home/profil_baru', $data);
 	}
 
 }

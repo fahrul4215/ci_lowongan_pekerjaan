@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2018 at 09:53 PM
+-- Generation Time: Jul 10, 2018 at 09:39 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -39,7 +39,8 @@ CREATE TABLE `jenis_perusahaan` (
 
 INSERT INTO `jenis_perusahaan` (`idJenisPerusahaan`, `jenisPerusahaan`) VALUES
 (1, 'manufaktur'),
-(2, 'dagang');
+(2, 'dagang'),
+(3, 'lainnya');
 
 -- --------------------------------------------------------
 
@@ -79,9 +80,9 @@ CREATE TABLE `lowongan` (
   `idPerusahaan` int(11) NOT NULL,
   `tglPost` date NOT NULL,
   `status` enum('buka','tutup') NOT NULL,
-  `gaji` int(11) NOT NULL,
+  `gaji` bigint(20) NOT NULL,
   `kota` varchar(25) NOT NULL,
-  `jamKerja` enum('Full Time','Part Time','Magang') NOT NULL,
+  `jamKerja` enum('0','1','2') NOT NULL,
   `kuota` int(11) NOT NULL,
   `fkKategori` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -91,8 +92,9 @@ CREATE TABLE `lowongan` (
 --
 
 INSERT INTO `lowongan` (`idLowongan`, `lowongan`, `deskripsi`, `persyaratan`, `idPerusahaan`, `tglPost`, `status`, `gaji`, `kota`, `jamKerja`, `kuota`, `fkKategori`) VALUES
-(1, 'Junior Programmer', 'Dibutuhkan junior programmer yang dapat bekerja full time di bagian web development', 'lulusan sma/sederajat\r\numur diatas 17 tahun\r\nlaki2/perempuan\r\nsingle', 1, '2018-06-20', 'buka', 500000, 'Malang', 'Full Time', 1, 1),
-(2, 'Senior Programmer', 'Dibutuhkan senior programmer pada divisi web development', 'menguasai framework ci\r\nlulusan s1', 2, '2018-06-28', 'buka', 1000000, 'Malang', 'Part Time', 5, 1);
+(1, 'Junior Programmer', 'Dibutuhkan junior programmer yang dapat bekerja full time di bagian web development', 'lulusan sma/sederajat\r\numur diatas 17 tahun\r\nlaki2/perempuan\r\nsingle', 1, '2018-06-20', 'buka', 500000, 'Malang', '0', 1, 1),
+(2, 'Senior Programmer', 'Dibutuhkan senior programmer pada divisi web development', 'menguasai framework ci\r\nlulusan s1', 1, '2018-06-28', 'buka', 1000000, 'Malang', '1', 4, 3),
+(4, 'Pekerja LOL', 'Pekerjaan yang LOL sekali :v', 'Harus LOL lah\nDiutamakan Orang LOL', 2, '2018-07-10', 'buka', 10001, 'Malang', '0', 3, 4);
 
 -- --------------------------------------------------------
 
@@ -119,10 +121,10 @@ CREATE TABLE `member` (
 
 INSERT INTO `member` (`idMember`, `namaMember`, `jenisKelamin`, `tanggalLahir`, `agama`, `alamat`, `noTelp`, `email`, `fotoMember`, `fkUser`) VALUES
 (1, 'Bambang', 'L', '1996-04-12', 'islam', 'bojonegoro', '085233825415', 'bambang143@gmail.com', '1.jpg', 1),
-(2, 'Muhammad Santo', 'L', '1995-04-26', 'islam', 'Bondowoso', '082323443213', 'msanto@gmail.com', '2.jpg', 2),
+(2, 'Muhammad Santo', 'L', '1995-04-26', 'islam', 'Bondowoso', '082323443213', 'masssanto@gmail.com', '3246555-wolfensteinii.jpg', 2),
 (3, 'Yulia Rahmawati', 'P', '1996-05-16', 'islam', 'malang', '085432754876', 'yuliar32@gmail.com', '3.jpg', 3),
-(4, 'Sintya Kusumawati', 'P', '1995-01-09', 'kristen', 'malang', '083223223432', 'kusumasintya@gmail.com', '4.jpg', 0),
-(5, 'coba sam', 'L', '2018-03-03', 'islam', 'lol', '089', 'a@coba', 'monster.png', 26);
+(4, 'Sintya Kusumawati', 'P', '1995-01-09', 'kristen', 'malang', '083223223432', 'kusumasintya@gmail.com', '4.jpg', 7),
+(6, 'Muchammad Fahrul Yurisnan', 'L', '1998-03-03', 'islam', 'jl. jaksa agung suprapto gg. 1b no. 197', '082232221741', 'fahrul4215@gmail.com', '~PP1.jpg', 8);
 
 -- --------------------------------------------------------
 
@@ -134,11 +136,20 @@ CREATE TABLE `pendaftar` (
   `idPendaftar` int(11) NOT NULL,
   `idMember` int(11) NOT NULL,
   `idLowongan` int(11) NOT NULL,
-  `cv` varchar(255) NOT NULL,
   `tglDaftar` date NOT NULL,
   `status` enum('baru','lolos','tidak lolos') NOT NULL,
   `keterangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pendaftar`
+--
+
+INSERT INTO `pendaftar` (`idPendaftar`, `idMember`, `idLowongan`, `tglDaftar`, `status`, `keterangan`) VALUES
+(1, 2, 2, '2018-07-04', 'baru', 'Belum di verifikasi'),
+(3, 2, 1, '2018-07-04', 'baru', 'Belum di verifikasi'),
+(4, 4, 1, '2018-07-04', 'baru', 'Belum di verifikasi'),
+(5, 6, 1, '2018-07-10', 'baru', 'Belum di verifikasi');
 
 -- --------------------------------------------------------
 
@@ -167,7 +178,8 @@ CREATE TABLE `perusahaan` (
 
 INSERT INTO `perusahaan` (`idPerusahaan`, `namaPerusahaan`, `alamat`, `noTelp`, `email`, `website`, `visi`, `misi`, `tahunBerdiri`, `idJenisPerusahaan`, `fotoPerusahaan`, `fkUser`) VALUES
 (1, 'G4 Indonesia', 'Jalan Jaksa Agung Suprapto', '08971251007', 'g4indonesia@gmail.com', 'g4.id', 'terbaik', 'terdepan', '2010-06-01', 1, 'lol.jpg', 3),
-(2, 'PT. LOL', 'jalan lol', '123456789012', 'lol@lol.lol', 'www.lol.com', 'lol lah', 'lol lah', '2017-06-28', 2, 'lol.jpg', 4);
+(2, 'PT. LOL', 'jalan lol', '123456789012', 'lol@lol.lol', 'www.lol.com', 'lol lah', 'lol lah', '2017-06-28', 2, 'lol.jpg', 4),
+(3, 'Ngalam Kuliner', 'Jalan Ngalam Rumit', '08971251007', 'ngalamkuliner@gmail.com', 'ngalamkuliner.com', 'Salam Satu Jiwa', 'Mantap Jiwa', '2015-12-31', 2, 'logo1.jpg', 6);
 
 -- --------------------------------------------------------
 
@@ -191,11 +203,20 @@ INSERT INTO `user` (`idUser`, `username`, `password`, `level`) VALUES
 (2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 2),
 (3, 'perusahaan', 'ee11cbb19052e40b07aac0ca060c23ee', 3),
 (4, 'lol', '9cdfb439c7876e703e307864c9167a15', 3),
-(5, 'pol', '627a1f8f3e1f8a2a0cbb9aedc33ade8c', 2);
+(5, 'pol', '627a1f8f3e1f8a2a0cbb9aedc33ade8c', 2),
+(6, 'coba', 'c3ec0f7b054e729c5a716c8125839829', 3),
+(7, 'paul', '6c63212ab48e8401eaf6b59b95d816a9', 2),
+(8, 'fahrul', '9b5317575f071bdccef2175b72191004', 2);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `jenis_perusahaan`
+--
+ALTER TABLE `jenis_perusahaan`
+  ADD PRIMARY KEY (`idJenisPerusahaan`);
 
 --
 -- Indexes for table `kategori_pekerjaan`
@@ -208,6 +229,18 @@ ALTER TABLE `kategori_pekerjaan`
 --
 ALTER TABLE `lowongan`
   ADD PRIMARY KEY (`idLowongan`);
+
+--
+-- Indexes for table `member`
+--
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`idMember`);
+
+--
+-- Indexes for table `pendaftar`
+--
+ALTER TABLE `pendaftar`
+  ADD PRIMARY KEY (`idPendaftar`);
 
 --
 -- Indexes for table `perusahaan`
@@ -226,6 +259,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `jenis_perusahaan`
+--
+ALTER TABLE `jenis_perusahaan`
+  MODIFY `idJenisPerusahaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `kategori_pekerjaan`
 --
 ALTER TABLE `kategori_pekerjaan`
@@ -235,19 +274,31 @@ ALTER TABLE `kategori_pekerjaan`
 -- AUTO_INCREMENT for table `lowongan`
 --
 ALTER TABLE `lowongan`
-  MODIFY `idLowongan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idLowongan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+  MODIFY `idMember` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `pendaftar`
+--
+ALTER TABLE `pendaftar`
+  MODIFY `idPendaftar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `perusahaan`
 --
 ALTER TABLE `perusahaan`
-  MODIFY `idPerusahaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idPerusahaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

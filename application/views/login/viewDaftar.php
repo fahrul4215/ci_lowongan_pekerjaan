@@ -28,12 +28,12 @@
 						</div>
 
 						<div class="wrap-input100">
-							<input class="input100" type="text" name="username" value="<?= set_value('username') ?>">
+							<input class="input100" type="text" name="username">
 							<span class="focus-input100"></span>
 							<span class="label-input100">Username</span>
 						</div>
 						<div class="wrap-input100">
-							<input class="input100" type="password" name="password" value="<?= set_value('password') ?>">
+							<input class="input100" type="password" name="password">
 							<span class="focus-input100"></span>
 							<span class="label-input100">Password</span>
 						</div>

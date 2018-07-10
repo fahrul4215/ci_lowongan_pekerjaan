@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-lg-4 sidebar">
                         <div class="single-widget protfolio-widget">
-                            <img src="<?= base_url('assets/home/img/perusahaan/'.$user[0]->fotoPerusahaan) ?>" alt="Foto Perusahaan">
+                            <img src="<?= base_url('assets/home/img/perusahaan/'.$user[0]->fotoPerusahaan) ?>" alt="Foto Perusahaan" heigt="150" width="150">
                         </div>
                         <div class="single-widget recent-posts-widget">
                             <h4 class="title">Lowongan <?= $user[0]->namaPerusahaan ?></h4>

@@ -15,7 +15,7 @@
 							<li><a href="single.html">single</a></li>
 						</ul>
 					</li> -->
-					<?php if ($this->session->userdata('masuk')): ?>
+					<?php if ($this->session->userdata('masuk') && $userMasuk[0]->level != 1): ?>
 						<li><a href="<?= base_url('index.php/home/profil') ?>">Profile</a></li>
 						<li><a href="<?= base_url('index.php/home/lowongan') ?>">My Lowongan</a></li>
 						<li style="color: #fff">
@@ -32,7 +32,11 @@
 							<a class="ticker-btn" href="<?= base_url('index.php/login/logout') ?>">Logout</a>
 						</li>
 					<?php else: ?>
-						<li><a class="ticker-btn" href="<?= base_url('index.php/login') ?>">Login / SignUp</a></li>
+						<?php if (isset($userMasuk) && $userMasuk[0]->level == 1): ?>
+							<li><a class="ticker-btn" href="<?= base_url('index.php/login/logout') ?>">Logout</a></li>
+						<?php else: ?>
+							<li><a class="ticker-btn" href="<?= base_url('index.php/login') ?>">Login / SignUp</a></li>
+						<?php endif ?>
 					<?php endif ?>
 				</ul>
 			</nav><!-- #nav-menu-container -->		    		
