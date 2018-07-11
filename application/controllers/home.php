@@ -29,7 +29,11 @@ class Home extends CI_Controller {
 		$data['userMasuk'] = $this->data;
 		$data['newLowongan'] = $this->lowongan->getNewLowongan();
 		$data['numLowongan'] = $this->lowongan->getLowongan('num');
-		$data['lowongan'] = $this->lowongan->getLowongan('');
+		if ($data['userMasuk'][0]->level == 3) {
+			$data['lowongan'] = $this->lowongan->getLowongan('',0,0,$data['userMasuk'][0]->idPerusahaan);
+		} else {
+			$data['lowongan'] = $this->lowongan->getLowongan('');
+		}
 		$data['kategori'] = $this->lowongan->getKategori();
 		$this->load->view('home/index', $data);
 	}
@@ -37,6 +41,10 @@ class Home extends CI_Controller {
 	public function print()
 	{
 		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 1) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
 		$data['newLowongan'] = $this->lowongan->getNewLowongan();
 		$data['numLowongan'] = $this->lowongan->getLowongan('num');
 		$data['lowongan'] = $this->lowongan->getLowongan('');
@@ -56,6 +64,11 @@ class Home extends CI_Controller {
 	}
 
 	public function updatefoto(){
+		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 2) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
 		$config['upload_path']			='./assets/home/img/';
@@ -79,6 +92,10 @@ class Home extends CI_Controller {
 	public function profil()
 	{
 		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 2 && $data['userMasuk'][0]->level != 3) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
 		$level =  $session_data['level'];
@@ -92,6 +109,11 @@ class Home extends CI_Controller {
 	}
 
 	public function updatemember(){
+		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 2) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
 		$this->form_validation->set_rules('nama', 'Nama', 'trim|required');
@@ -111,6 +133,11 @@ class Home extends CI_Controller {
 
 	public function apply($idLowongan, $idMember)
 	{
+		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 2) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
 		$lowongan = $this->lowongan->getLowongan($idLowongan);
 		// $user = $this->user->getUser($idMember);
 		// var_dump($user);
@@ -133,17 +160,31 @@ class Home extends CI_Controller {
 	public function lowongan()
 	{
 		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 2 && $data['userMasuk'][0]->level != 3) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
+		if (isset($data['userMasuk'][0]->idMember)) {
+			$data['pendaftar'] = $this->lowongan->getPendaftarLowongan('member', $data['userMasuk'][0]->idMember);
+		}
 		$this->load->view('home/myLowongan', $data);
+	}
+
+	public function pendaftar($idLowongan)
+	{
+		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 3) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
+		$data['pendaftar'] = $this->lowongan->getPendaftarLowongan('perusahaan', $idLowongan);
+		$this->load->view('home/pendaftar', $data);
 	}
 
 	public function getGridLowongan()
 	{
 		$data['userMasuk'] = $this->data;
-		if (isset($data['userMasuk'][0]->idPerusahaan)) {
-			$result = $this->lowongan->getLowongan('',0,0,$data['userMasuk'][0]->idPerusahaan);
-		} else {
-			$result = $this->lowongan->getLowongan('',0,0,$data['userMasuk'][0]->idMember);
-		}
+		$result = $this->lowongan->getLowongan('',0,0,$data['userMasuk'][0]->idPerusahaan);
 
 		foreach ($result as $value) {
 			$value->tglPost = date('d-m-Y',strtotime($value->tglPost));
@@ -228,6 +269,18 @@ class Home extends CI_Controller {
 			}
 		}
 		$this->load->view('home/profil_baru', $data);
+	}
+
+	public function verifikasi($idPendaftar)
+	{
+		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 3) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
+		$this->lowongan->verifikasiPendaftar($idPendaftar);
+		$data['lowongan'] = $this->lowongan->getPendaftarLowongan('', $idPendaftar);
+		redirect('home/pendaftar/'.$data['lowongan'][0]->idLowongan);
 	}
 
 }

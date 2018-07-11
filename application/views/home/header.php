@@ -26,14 +26,17 @@
 								} else if(isset($userMasuk[0]->namaPerusahaan)) {
 									echo $userMasuk[0]->namaPerusahaan;
 								} else {
-									echo 'Admin';
+									echo 'Not Logged In';
 								}
 							?>
 							<a class="ticker-btn" href="<?= base_url('index.php/login/logout') ?>">Logout</a>
 						</li>
 					<?php else: ?>
 						<?php if (isset($userMasuk) && $userMasuk[0]->level == 1): ?>
-							<li><a class="ticker-btn" href="<?= base_url('index.php/login/logout') ?>">Logout</a></li>
+							<li style="color: #fff">
+								Halo, Admin
+								<a class="ticker-btn" href="<?= base_url('index.php/login/logout') ?>">Logout</a>
+							</li>
 						<?php else: ?>
 							<li><a class="ticker-btn" href="<?= base_url('index.php/login') ?>">Login / SignUp</a></li>
 						<?php endif ?>

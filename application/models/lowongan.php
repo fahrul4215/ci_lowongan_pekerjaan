@@ -77,6 +77,22 @@ class Lowongan extends CI_Model {
 		return $this->db->get('pendaftar')->result();
 	}
 
+	public function getPendaftarLowongan($level, $id)
+	{
+		$this->db->from('pendaftar p');
+		$this->db->join('lowongan l', 'p.idLowongan = l.idLowongan');
+		if ($level == 'member') {
+			$this->db->where('p.idMember', $id);			
+		} elseif ($level == 'perusahaan') {
+			$this->db->join('member m', 'p.idMember = m.idMember');
+			$this->db->where('p.idLowongan', $id);
+		} else {
+			$this->db->where('p.idPendaftar', $id);
+		}
+
+		return $this->db->get()->result();
+	}
+
 	public function tambahLowongan($idPerusahaan)
 	{
 		$data = array(
@@ -117,6 +133,13 @@ class Lowongan extends CI_Model {
 	{
 		$this->db->where('idLowongan', $id);
 		$this->db->delete('lowongan');
+	}
+
+	public function verifikasiPendaftar($idPendaftar)
+	{
+		$data = array('keterangan' => 'Terverifikasi');
+		$this->db->where('idPendaftar', $idPendaftar);
+		$this->db->update('pendaftar', $data);
 	}
 
 }

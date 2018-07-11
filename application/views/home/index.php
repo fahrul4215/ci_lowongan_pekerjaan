@@ -121,146 +121,17 @@
 										<td><?= $value->kuota ?></td>
 										<td><?= $value->namaKategori ?></td>
 										<td>
-											<a href="<?= base_url('index.php/home/single/'.$value->idLowongan) ?>" class="btn btn-success">Lihat</a>
+											<?php if (isset($userMasuk) && $userMasuk[0]->level == 3): ?>
+												<a href="<?= base_url('index.php/home/pendaftar/'.$value->idLowongan) ?>" class="btn btn-primary">List Pendaftar</a>
+											<?php else: ?>
+												<a href="<?= base_url('index.php/home/single/'.$value->idLowongan) ?>" class="btn btn-success">Lihat</a>
+											<?php endif ?>
 										</td>
 						            </tr>
 					        	<?php endforeach ?>
 					        </tbody>
-					        <!-- <tfoot>
-					            <tr>
-					                <th>Name</th>
-					                <th>Position</th>
-					                <th>Office</th>
-					                <th>Age</th>
-					                <th>Start date</th>
-					                <th>Salary</th>
-					            </tr>
-					        </tfoot> -->
 						</table>
-						
-						<!-- <a class="text-uppercase loadmore-btn mx-auto d-block" href="category.html">Load More job Posts</a> -->
-
 					</div>
-					<!-- <div class="col-lg-4 sidebar">
-						<div class="single-slidebar">
-							<h4>Jobs by Location</h4>
-							<ul class="cat-list">
-								<li><a class="justify-content-between d-flex" href="category.html"><p>New York</p><span>37</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Park Montana</p><span>57</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Atlanta</p><span>33</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Arizona</p><span>36</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Florida</p><span>47</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Rocky Beach</p><span>27</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Chicago</p><span>17</span></a></li>
-							</ul>
-						</div>
-
-						<div class="single-slidebar">
-							<h4>Top rated job posts</h4>
-							<div class="active-relatedjob-carusel">
-								<div class="single-rated">
-									<img class="img-fluid" src="<?= base_url('assets/home/') ?>img/r1.jpg" alt="">
-									<a href="single.html"><h4>Creative Art Designer</h4></a>
-									<h6>Premium Labels Limited</h6>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-									<a href="#" class="btns text-uppercase">Apply job</a>
-								</div>
-								<div class="single-rated">
-									<img class="img-fluid" src="<?= base_url('assets/home/') ?>img/r1.jpg" alt="">
-									<a href="single.html"><h4>Creative Art Designer</h4></a>
-									<h6>Premium Labels Limited</h6>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-									<a href="#" class="btns text-uppercase">Apply job</a>
-								</div>
-								<div class="single-rated">
-									<img class="img-fluid" src="<?= base_url('assets/home/') ?>img/r1.jpg" alt="">
-									<a href="single.html"><h4>Creative Art Designer</h4></a>
-									<h6>Premium Labels Limited</h6>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> 56/8, Panthapath Dhanmondi Dhaka</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-									<a href="#" class="btns text-uppercase">Apply job</a>
-								</div>																		
-							</div>
-						</div>							
-
-						<div class="single-slidebar">
-							<h4>Jobs by Category</h4>
-							<ul class="cat-list">
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Technology</p><span>37</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Media & News</p><span>57</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Goverment</p><span>33</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Medical</p><span>36</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Restaurants</p><span>47</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Developer</p><span>27</span></a></li>
-								<li><a class="justify-content-between d-flex" href="category.html"><p>Accounting</p><span>17</span></a></li>
-							</ul>
-						</div>
-
-						<div class="single-slidebar">
-							<h4>Carrer Advice Blog</h4>
-							<div class="blog-list">
-								<div class="single-blog " style="background:#000 url(img/blog1.jpg);">
-									<a href="single.html"><h4>Home Audio Recording <br>
-									For Everyone</h4></a>
-									<div class="meta justify-content-between d-flex">
-										<p>
-											02 Hours ago
-										</p>
-										<p>
-											<span class="lnr lnr-heart"></span>
-											06
-											 <span class="lnr lnr-bubble"></span>
-											02
-										</p>
-									</div>
-								</div>
-								<div class="single-blog " style="background:#000 url(img/blog2.jpg);">
-									<a href="single.html"><h4>Home Audio Recording <br>
-									For Everyone</h4></a>
-									<div class="meta justify-content-between d-flex">
-										<p>
-											02 Hours ago
-										</p>
-										<p>
-											<span class="lnr lnr-heart"></span>
-											06
-											 <span class="lnr lnr-bubble"></span>
-											02
-										</p>
-									</div>
-								</div>
-								<div class="single-blog " style="background:#000 url(img/blog1.jpg);">
-									<a href="single.html"><h4>Home Audio Recording <br>
-									For Everyone</h4></a>
-									<div class="meta justify-content-between d-flex">
-										<p>
-											02 Hours ago
-										</p>
-										<p>
-											<span class="lnr lnr-heart"></span>
-											06
-											 <span class="lnr lnr-bubble"></span>
-											02
-										</p>
-									</div>
-								</div>																		
-							</div>
-						</div>
-					</div> -->
 				</div>
 			</div>	
 		</section>

@@ -18,6 +18,9 @@
 							<?php if ($this->session->flashdata('dahKeluar')): ?>
 								<p class="alert alert-danger"><?= $this->session->flashdata('dahKeluar') ?></p>
 							<?php endif ?>
+							<?php if ($this->session->flashdata('acl')): ?>
+								<p class="alert alert-danger"><?= $this->session->flashdata('acl') ?></p>
+							<?php endif ?>
 						</div>
 						
 						<span class="login100-form-title p-b-43">

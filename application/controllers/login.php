@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 		}
 
 		if ($this->session->userdata('masuk')) {
-			redirect('home','refresh');
+			redirect('home');
 		}
 	}
 
