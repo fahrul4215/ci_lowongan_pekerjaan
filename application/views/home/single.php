@@ -56,6 +56,7 @@
 												<li><a href="<?= base_url('index.php/home/apply/'.$lowongan[0]->idLowongan.'/'.$userMasuk[0]->idMember) ?>">Apply</a></li>
 											<?php endif ?>
 										<?php endif ?>
+										<li><a href="<?= site_url('home/single/'.$this->uri->segment(3).'/'.$lowongan[0]->idPerusahaan) ?>">Profil Perusahaan</a></li>
 									</ul>
 								</div>
 								<p>

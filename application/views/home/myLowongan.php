@@ -31,7 +31,6 @@
     <div class="row">
       <div class="col-lg-12 post-list blog-post-list">
         <?php if ($userMasuk[0]->level == 3): ?>
-          <a href="<?= site_url('home/pendaftar') ?>" class="btn btn-primary">Pendaftar</a>
           <hr>
           <div id="lowonganGrid"></div>                  
           <?php else: ?>

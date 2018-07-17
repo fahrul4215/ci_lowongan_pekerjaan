@@ -63,6 +63,14 @@ class User extends CI_Model {
 		return $this->db->get()->result();
 	}
 
+	public function getPerusahaan($id)
+	{
+		$this->db->from('perusahaan p');
+		$this->db->join('jenis_perusahaan jp', 'p.idJenisPerusahaan = jp.idJenisPerusahaan');
+		$this->db->where('idPerusahaan', $id);
+		return $this->db->get()->result();
+	}
+
 	public function getJenisPerusahaan()
 	{
 		return $this->db->get('jenis_perusahaan')->result();
