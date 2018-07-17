@@ -111,10 +111,23 @@ class User extends CI_Model {
 		$this->db->update('member',$data);
 	}
 
+	public function updatefotop($id){
+		$file = $this->upload->data();
+		$data = array('fotoPerusahaan' => $file['file_name']);
+		$this->db->where('fkUser',$id);
+		$this->db->update('perusahaan',$data);
+	}
+
 	public function updateUser($id){
 		$data = array('namaMember' => $this->input->post('nama'),'alamat' => $this->input->post('alamat'),'tanggalLahir' => $this->input->post('tanggalLahir'),'agama' => $this->input->post('agama'),'noTelp' => $this->input->post('notelp'),'jenisKelamin' => $this->input->post('jkl'),'email' => $this->input->post('email'));
 		$this->db->where('fkUser',$id);
 		$this->db->update('member',$data);
+	}
+
+	public function updateperusahaan($id){
+		$data = array('namaPerusahaan' => $this->input->post('namaPerusahaan'),'alamat' => $this->input->post('alamat'),'noTelp' => $this->input->post('noTelp'),'email' => $this->input->post('email'),'website' => $this->input->post('website'),'visi' => $this->input->post('visi'),'misi' => $this->input->post('misi'),'tahunBerdiri' => $this->input->post('tahunBerdiri'),'website' => $this->input->post('website'));
+		$this->db->where('fkUser',$id);
+		$this->db->update('perusahaan',$data);
 	}
 
 }

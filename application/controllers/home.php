@@ -89,6 +89,32 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function updatefotoP(){
+		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 2 && $data['userMasuk'][0]->level != 3) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
+		$session_data = $this->session->userdata('masuk');
+		$id = $session_data['idUser'];
+		$config['upload_path']			='./assets/home/img/perusahaan/';
+		$config['allowed_types']		='jpg|png';
+		$config['max_width']			= 10240;
+		$config['max_height']			= 7680;
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		if(!$this->upload->do_upload('gambar'))
+		{
+			$data['error'] = array('error' => $this->upload->display_errors());
+
+		}else{
+
+			$this->user->updatefotop($id);
+			redirect('home/profil','refresh');
+		}
+	}
+
 	public function profil()
 	{
 		$data['userMasuk'] = $this->data;
@@ -131,6 +157,28 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function updateperusahaan(){
+		$data['userMasuk'] = $this->data;
+		if ($data['userMasuk'][0]->level != 2 && $data['userMasuk'][0]->level != 3) {
+			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
+			redirect('login');
+		}
+
+		$session_data = $this->session->userdata('masuk');
+		$id = $session_data['idUser'];
+			$this->form_validation->set_rules('namaPerusahaan', 'Nama', 'trim|required');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required');
+			$this->form_validation->set_rules('noTelp', 'Nomor Telepon', 'trim|required');
+			$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+		if ($this->form_validation->run() == FALSE) {
+			$this->form_validation->set_message('Update Profil', "Update Profil Gagal");
+		} else {
+			$this->user->updateperusahaan($id);
+			redirect('home/profil','refresh');
+		}
+
+	
+	}
 	public function apply($idLowongan, $idMember)
 	{
 		$data['userMasuk'] = $this->data;

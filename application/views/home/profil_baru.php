@@ -36,10 +36,7 @@
 									<h1 class="text-center">Member</h1>
 									<h1> <?= $this->session->userdata('masuk')['username']; ?></h1>
 									<?= validation_errors() ?>
-									<?php if (isset($error)): ?>
-										<h3 class="text-center text-danger"><?= $error ?></h3>
-									<?php endif ?>
-									<hr>
+									ss
 									<?php echo form_open_multipart('home/profilBaru/'.$this->uri->segment(3), array('class' => 'form-horizontal','role' => 'form')); ?>
 									<div class="row">
 										<!-- left column -->

@@ -25,62 +25,123 @@
 		</section>
 		<!-- End banner Area -->	
 
-        <!-- Start Perusahaan Area -->
-        <section class="blog-posts-area section-gap">
-            <div class="container">
+        <section class="blog-posts-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 post-list blog-post-list">
+                            <div class="single-post">
+                                <div class="content-wrap">
+                                    <div class="container">
+                                        <h1 class="text-center">Perusahaan</h1>
+                                        <h1> <?= $this->session->userdata('masuk')['username']; ?></h1>
+                                        <?= validation_errors() ?>
+                                        <?php if (isset($error)): ?>
+                                            <h3 class="text-center text-danger"><?= $error ?></h3>
+                                        <?php endif ?>
+                                        <hr>
+                                        
+                                        <div class="row">
+                                            <!-- left column -->
+                                           <?php echo form_open_multipart('home/updatefotoP'); ?>
                 <div class="row">
-                    <div class="col-lg-8 post-list blog-post-list">
-                        <div class="single-post">
-                            <!-- <img class="img-fluid" src="<?= base_url('assets/home/') ?>img/blog/p1.jpg" alt=""> -->
-                            <h1>
-                                <?= $user[0]->namaPerusahaan ?>
-                            </h1>
-                            <div class="content-wrap">
-                                <h4>Visi</h4>
-                                <blockquote class="generic-blockquote">
-                                    <?= $user[0]->visi ?>
-                                </blockquote>
+                  <!-- left column -->
+                  <div class="col-md-3">
+                    <div class="text-center">
+                         <img src="<?= base_url('assets/home/img/perusahaan/'.$user[0]->fotoPerusahaan) ?>" alt="Foto Perusahaan" heigt="150" width="150">
+                      <h6>Upload a different photo...</h6>
+                      <input type="file" name="gambar" class="form-control">
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                          <input type="submit" class="btn btn-primary" value="Save Changes">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php echo form_close(); ?>
 
-                                <h4>Misi</h4>
-                                <blockquote class="generic-blockquote">
-                                    <?= $user[0]->misi ?>
-                                </blockquote>
 
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="float: left;">
-                                    <h4>Alamat</h4>
-                                    <p><?= $user[0]->alamat ?></p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="float: left;">
-                                    <h4>No. Telepon</h4>
-                                    <p><?= $user[0]->noTelp ?></p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="float: left;">
-                                    <h4>Email</h4>
-                                    <p><?= $user[0]->email ?></p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="float: left;">
-                                    <h4>Website</h4>
-                                    <p><?= $user[0]->website ?></p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="float: left;">
-                                    <h4>Tahun Berdiri</h4>
-                                    <p><?= date('Y', strtotime($user[0]->tahunBerdiri)) ?></p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="float: left;">
-                                    <h4>Jenis Perusahaan</h4>
-                                    <p><?= $user[0]->jenisPerusahaan ?></p>
+
+                                            <!-- edit form column -->
+                                            <div class="col-md-9 personal-info">
+                                                <div class="alert alert-info alert-dismissable">
+                                                    <a class="panel-close close" data-dismiss="alert">×</a>
+                                                    <i class="fa fa-coffee"></i>
+                                                    Mohon semua <strong>Data</strong> diisi sesuai dengan identitas perusahaan.
+                                                </div>
+                                                <h3>Company info</h3>
+                                                <?php 
+                    $attributes = array('class' => 'form-horizontal','role' => 'form');
+                    echo form_open('home/updateperusahaan',$attributes); ?>
+
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">Nama Perusahaan</label>
+                                                        <div class="col-lg-8">
+                                                            <input class="form-control" type="text" value="<?= $user[0]->namaPerusahaan ?>" name="namaPerusahaan" placeholder="Masukkan Nama Perusahaan anda" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">Alamat</label>
+                                                        <div class="col-lg-8">
+                                                            <textarea name="alamat" class="form-control" required placeholder="Masukkan Alamat Perusahaan anda"> <?= $user[0]->alamat ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">No Telp</label>
+                                                        <div class="col-lg-8">
+                                                            <input class="form-control" type="text" value="<?= $user[0]->noTelp ?>" name="noTelp" placeholder="Masukkan No Telpon Perusahaan anda" required maxlength="12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">E-mail </label>
+                                                        <div class="col-lg-8">
+                                                            <input class="form-control" type="email" value="<?= $user[0]->email ?>" name="email" placeholder="Masukkan email Perusahaan anda" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">Website </label>
+                                                        <div class="col-lg-8">
+                                                            <input class="form-control" type="text" value="<?= $user[0]->website ?>" name="website" placeholder="Masukkan Website Perusahaan anda" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">Tanggal Berdiri</label>
+                                                        <div class="col-lg-8">
+                                                            <input class="form-control" type="text" value="<?= $user[0]->tahunBerdiri?>" name="tahunBerdiri" required>
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">Visi</label>
+                                                        <div class="col-lg-8">
+                                                            <textarea name="visi" class="form-control" required placeholder="Masukkan Visi Perusahaan anda">  <?= $user[0]->visi ?> </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 control-label">Misi</label>
+                                                        <div class="col-lg-8">
+                                                            <textarea name="misi" class="form-control" required placeholder="Masukkan Misi Perusahaan anda">  <?= $user[0]->misi ?> </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label"></label>
+                                                        <div class="col-md-8">
+                                                            <input type="submit" class="btn btn-primary" value="Save Changes" name="inputProfil">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php echo form_close(); ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>                                                                      
-                    </div>
-                    <div class="col-lg-4 sidebar">
-                        <div class="single-widget protfolio-widget">
-                            <img src="<?= base_url('assets/home/img/perusahaan/'.$user[0]->fotoPerusahaan) ?>" alt="Foto Perusahaan" heigt="150" width="150">
                         </div>
                     </div>
                 </div>
-            </div>  
-        </section>
+            </section>
         <!-- End Perusahaan Area -->
         <?php include 'foot.php'; ?>
 	</body>
