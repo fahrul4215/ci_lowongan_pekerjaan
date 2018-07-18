@@ -49,11 +49,18 @@ class Lowongan extends CI_Model {
 		return $this->db->get('kategori_pekerjaan', $limit)->result();
 	}
 
-	public function updateKuotaLowongan($idLowongan, $isiBaru)
+	public function updateKuotaLowongan($idLowongan, $isiBaru, $status)
 	{
-		$data = array(
-			'kuota'	=> $isiBaru
-		);
+		if ($status == '') {
+			$data = array(
+				'kuota'	=> $isiBaru
+			);
+		} else {
+			$data = array(
+				'kuota'	=> $isiBaru,
+				'status' => $status
+			);
+		}
 
 		$this->db->where('idLowongan', $idLowongan);
 		$this->db->update('lowongan', $data);

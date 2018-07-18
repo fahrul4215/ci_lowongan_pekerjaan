@@ -29,7 +29,7 @@
 								<th>Kuota</th>	
 							</tr>
 						</thead>
-						<tbody style="color: #000;">
+						<tbody style="color: #000 !important;">
 							<?php foreach ($lowongan as $value): ?>	
 								<tr>
 									<td><?= date('d-m-Y', strtotime($lowongan[0]->tglPost)) ?></td>

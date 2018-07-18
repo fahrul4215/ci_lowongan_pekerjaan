@@ -74,6 +74,11 @@
 		
 		<!-- Start post Area -->
 		<section class="post-area section-gap">
+			<?php if (isset($userMasuk) && $userMasuk[0]->level == 1): ?>
+				<div class="container">
+					<a href="<?= site_url('home/print') ?>" class="btn btn-success">Print Lowongan</a>
+				</div>
+			<?php endif ?>
 			<div class="container">
 				<div class="row justify-content-center d-flex">
 					<div class="col-lg-12 post-list">

@@ -54,8 +54,9 @@ public function load_view($view, $data = array())
     // Render the HTML as PDF
     $dompdf->render();
     $time = time();
+    $date = date('d-m-Y');
 
     // Output the generated PDF to Browser
-    $dompdf->stream("welcome-". $time);
+    $dompdf->stream("Lowongan Pekerjaan - ". $date);
 }
 }

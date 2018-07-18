@@ -29,7 +29,7 @@ class Home extends CI_Controller {
 		$data['userMasuk'] = $this->data;
 		$data['newLowongan'] = $this->lowongan->getNewLowongan();
 		$data['numLowongan'] = $this->lowongan->getLowongan('num');
-		if ($data['userMasuk'][0]->level == 3) {
+		if (!empty($data['userMasuk']) && $data['userMasuk'][0]->level == 3) {
 			$data['lowongan'] = $this->lowongan->getLowongan('',0,0,$data['userMasuk'][0]->idPerusahaan);
 		} else {
 			$data['lowongan'] = $this->lowongan->getLowongan('');
@@ -54,13 +54,19 @@ class Home extends CI_Controller {
 		$this->pdf->load_view('home/printLowongan', $data);
 	}
 
-	public function single($id)
+	public function single($idLowongan, $idPerusahaan = 0)
 	{
 		$data['userMasuk'] = $this->data;
-		$data['lowongan'] = $this->lowongan->getLowongan($id);
-		$data['lowonganTerkait'] = $this->lowongan->getLowongan('', $id, $data['lowongan'][0]->fkKategori);
-		$data['pendaftar'] = $this->lowongan->getPendaftar();
-		$this->load->view('home/single', $data);
+		if ($idPerusahaan == 0) {
+			$data['lowongan'] = $this->lowongan->getLowongan($idLowongan);
+			$data['lowonganTerkait'] = $this->lowongan->getLowongan('', $idLowongan, $data['lowongan'][0]->fkKategori);
+			$data['pendaftar'] = $this->lowongan->getPendaftar();
+			$this->load->view('home/single', $data);
+		} else {
+			$data['perusahaan'] = $this->user->getPerusahaan($idPerusahaan);
+			$data['lowongan'] = $this->lowongan->getLowongan('',0,0,$idPerusahaan);
+			$this->load->view('home/perusahaan', $data);
+		}
 	}
 
 	public function updatefoto(){
@@ -187,20 +193,15 @@ class Home extends CI_Controller {
 			redirect('login');
 		}
 		$lowongan = $this->lowongan->getLowongan($idLowongan);
-		// $user = $this->user->getUser($idMember);
-		// var_dump($user);
-		// var_dump($lowongan);
-
-		// foreach ($this->lowongan->getPendaftar() as $value) {
-		// 	if ($value->idLowongan == $idLowongan && $value->idMember == $idMember) {
-		// 		$this->session->set_flashdata('dahApplied', 'Anda Telah Terdaftar Lowongan '.$lowongan[0]->lowongan);
-		// 		redirect('home');
-		// 	}
-		// }
-
+		
 		$kuotaBaru = $lowongan[0]->kuota - 1;
+		if ($lowongan[0]->kuota == 0) {
+			$status = 'tutup';
+		} else {
+			$status = '';
+		}
 		$this->lowongan->apply($idLowongan, $idMember);
-		$this->lowongan->updateKuotaLowongan($idLowongan, $kuotaBaru);
+		$this->lowongan->updateKuotaLowongan($idLowongan, $kuotaBaru, $status);
 		$this->session->set_flashdata('applied', 'Anda Telah Berhasil Apply Pekerjaan '.$lowongan[0]->lowongan);
 		redirect('home');
 	}
