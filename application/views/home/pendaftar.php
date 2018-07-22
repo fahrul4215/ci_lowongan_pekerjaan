@@ -36,6 +36,7 @@
               <th>Tgl Daftar</th>
               <th>Lowongan</th>
               <th>Member</th>
+              <th>CV</th>
               <th>Status</th>
               <th>Keterangan</th>
               <th>Aksi</th>
@@ -47,11 +48,13 @@
                 <td><?= date('d-m-Y', strtotime($value->tglDaftar)) ?></td>
                 <td><?= $value->lowongan ?></td>
                 <td><?= $value->namaMember ?></td>
-                <td><?= $value->status ?></td>
+                <td><a href="<?= base_url('assets/cv/'.$value->cv) ?>" target="_blank"><?= $value->cv ?></a></td>
+                <td><?= $value->statusDaftar ?></td>
                 <td><?= $value->keterangan ?></td>
                 <td>
                   <?php if ($value->keterangan == 'Belum di verifikasi'): ?>
-                    <a href="<?= base_url('index.php/home/verifikasi/'.$value->idPendaftar) ?>" class="btn btn-success">Verifikasi</a>
+                    <a href="<?= base_url('index.php/home/verifikasi/'.$value->idLowongan.'/'.$value->idPendaftar.'/terima') ?>" class="btn btn-success">Terima</a>
+                    <a href="<?= base_url('index.php/home/verifikasi/'.$value->idLowongan.'/'.$value->idPendaftar.'/tolak') ?>" class="btn btn-danger">Tolak</a>
                   <?php else: ?>
                     
                   <?php endif ?>

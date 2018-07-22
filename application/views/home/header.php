@@ -18,6 +18,7 @@
 					<?php if ($this->session->userdata('masuk') && $userMasuk[0]->level != 1): ?>
 						<li><a href="<?= base_url('index.php/home/profil') ?>">Profile</a></li>
 						<li><a href="<?= base_url('index.php/home/lowongan') ?>">My Lowongan</a></li>
+						<!-- <?= ($userMasuk[0]->level==2) ? '<span class="badge badge-success badge-pill">2</span>' : ''; ?> -->
 						<li style="color: #fff">
 							Halo, 
 							<?php 

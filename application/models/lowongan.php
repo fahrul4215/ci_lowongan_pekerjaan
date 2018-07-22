@@ -66,13 +66,30 @@ class Lowongan extends CI_Model {
 		$this->db->update('lowongan', $data);
 	}
 
-	public function apply($idLowongan, $idMember)
+	public function uploadCV()
+	{
+		$config['upload_path'] = './assets/cv/';
+		$config['allowed_types'] = 'pdf';
+		$config['remove_space']  = TRUE;
+		
+		$this->load->library('upload', $config);
+		
+		if ($this->upload->do_upload('cv')){
+			return array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+		}
+		else{
+			return array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+		}
+	}
+
+	public function apply($idLowongan, $idMember, $upload)
 	{
 		$data = array(
 			'idMember'		=> $idMember,
 			'idLowongan'	=> $idLowongan,
 			'tglDaftar'		=> date('Y-m-d'),
-			'status'		=> 'baru',
+			'cv'			=> $upload['file']['file_name'],
+			'statusDaftar'	=> 'baru',
 			'keterangan'	=> 'Belum di verifikasi'
 		);
 
@@ -142,9 +159,13 @@ class Lowongan extends CI_Model {
 		$this->db->delete('lowongan');
 	}
 
-	public function verifikasiPendaftar($idPendaftar)
+	public function verifikasiPendaftar($idPendaftar, $keterangan)
 	{
-		$data = array('keterangan' => 'Terverifikasi');
+		if ($keterangan=='terima') {
+			$data = array('statusDaftar'=>'lolos','keterangan' => 'Terverifikasi');
+		} else {
+			$data = array('statusDaftar'=>'tidak lolos','keterangan' => 'Terverifikasi');
+		}
 		$this->db->where('idPendaftar', $idPendaftar);
 		$this->db->update('pendaftar', $data);
 	}

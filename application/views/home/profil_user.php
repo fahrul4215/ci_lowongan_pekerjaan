@@ -35,9 +35,12 @@
 
             <div class="content-wrap">
 
-
               <div class="container">
                 <h1> <?php echo $row->username; ?></h1>
+                <h3 class="text-center text-danger"><?= validation_errors() ?></h3>
+                <?php if (isset($error)): ?>
+                  <h3 class="text-center text-danger"><?= $error ?></h3>
+                <?php endif ?>
                 <hr>
                 <?php echo form_open_multipart('home/updatefoto'); ?>
                 <div class="row">

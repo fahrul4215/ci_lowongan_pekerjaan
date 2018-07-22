@@ -54,21 +54,6 @@ class Home extends CI_Controller {
 		$this->pdf->load_view('home/printLowongan', $data);
 	}
 
-	public function single($idLowongan, $idPerusahaan = 0)
-	{
-		$data['userMasuk'] = $this->data;
-		if ($idPerusahaan == 0) {
-			$data['lowongan'] = $this->lowongan->getLowongan($idLowongan);
-			$data['lowonganTerkait'] = $this->lowongan->getLowongan('', $idLowongan, $data['lowongan'][0]->fkKategori);
-			$data['pendaftar'] = $this->lowongan->getPendaftar();
-			$this->load->view('home/single', $data);
-		} else {
-			$data['perusahaan'] = $this->user->getPerusahaan($idPerusahaan);
-			$data['lowongan'] = $this->lowongan->getLowongan('',0,0,$idPerusahaan);
-			$this->load->view('home/perusahaan', $data);
-		}
-	}
-
 	public function updatefoto(){
 		$data['userMasuk'] = $this->data;
 		if ($data['userMasuk'][0]->level != 2) {
@@ -77,7 +62,7 @@ class Home extends CI_Controller {
 		}
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
-		$config['upload_path']			='./assets/home/img/';
+		$config['upload_path']			='./assets/home/img/member/';
 		$config['allowed_types']		='jpg|png';
 		$config['max_width']			= 10240;
 		$config['max_height']			= 7680;
@@ -86,8 +71,17 @@ class Home extends CI_Controller {
 
 		if(!$this->upload->do_upload('gambar'))
 		{
-			$data['error'] = array('error' => $this->upload->display_errors());
-
+			$data['error'] = $this->upload->display_errors();
+			$session_data = $this->session->userdata('masuk');
+			$id = $session_data['idUser'];
+			$level =  $session_data['level'];
+			if($level==2){
+				$data['user'] = $this->user->getUser($id);
+				$this->load->view('home/profil_user', $data);
+			}else if($level==3){
+				$data['user'] = $this->user->getUser1($id, $level);
+				$this->load->view('home/profil_perusahaan', $data);
+			}
 		}else{
 
 			$this->user->updatefotom($id);
@@ -112,8 +106,17 @@ class Home extends CI_Controller {
 
 		if(!$this->upload->do_upload('gambar'))
 		{
-			$data['error'] = array('error' => $this->upload->display_errors());
-
+			$data['error'] = $this->upload->display_errors();
+			$session_data = $this->session->userdata('masuk');
+			$id = $session_data['idUser'];
+			$level =  $session_data['level'];
+			if($level==2){
+				$data['user'] = $this->user->getUser($id);
+				$this->load->view('home/profil_user', $data);
+			}else if($level==3){
+				$data['user'] = $this->user->getUser1($id, $level);
+				$this->load->view('home/profil_perusahaan', $data);
+			}
 		}else{
 
 			$this->user->updatefotop($id);
@@ -157,6 +160,16 @@ class Home extends CI_Controller {
 		$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');	
 		if ($this->form_validation->run() == FALSE) {
 			$this->form_validation->set_message('Update Profil', "Update Profil Gagal");
+			$session_data = $this->session->userdata('masuk');
+			$id = $session_data['idUser'];
+			$level =  $session_data['level'];
+			if($level==2){
+				$data['user'] = $this->user->getUser($id);
+				$this->load->view('home/profil_user', $data);
+			}else if($level==3){
+				$data['user'] = $this->user->getUser1($id, $level);
+				$this->load->view('home/profil_perusahaan', $data);
+			}
 		} else {
 			$this->user->updateUser($id);
 			redirect('home/profil','refresh');
@@ -172,19 +185,45 @@ class Home extends CI_Controller {
 
 		$session_data = $this->session->userdata('masuk');
 		$id = $session_data['idUser'];
-			$this->form_validation->set_rules('namaPerusahaan', 'Nama', 'trim|required');
-			$this->form_validation->set_rules('email', 'Email', 'trim|required');
-			$this->form_validation->set_rules('noTelp', 'Nomor Telepon', 'trim|required');
-			$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+		$this->form_validation->set_rules('namaPerusahaan', 'Nama', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('noTelp', 'Nomor Telepon', 'trim|required');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
 		if ($this->form_validation->run() == FALSE) {
 			$this->form_validation->set_message('Update Profil', "Update Profil Gagal");
+			$session_data = $this->session->userdata('masuk');
+			$id = $session_data['idUser'];
+			$level =  $session_data['level'];
+			if($level==2){
+				$data['user'] = $this->user->getUser($id);
+				$this->load->view('home/profil_user', $data);
+			}else if($level==3){
+				$data['user'] = $this->user->getUser1($id, $level);
+				$this->load->view('home/profil_perusahaan', $data);
+			}
 		} else {
 			$this->user->updateperusahaan($id);
 			redirect('home/profil','refresh');
 		}
 
-	
+
 	}
+
+	public function single($idLowongan, $idPerusahaan = 0)
+	{
+		$data['userMasuk'] = $this->data;
+		if ($idPerusahaan == 0) {
+			$data['lowongan'] = $this->lowongan->getLowongan($idLowongan);
+			$data['lowonganTerkait'] = $this->lowongan->getLowongan('', $idLowongan, $data['lowongan'][0]->fkKategori);
+			$data['pendaftar'] = $this->lowongan->getPendaftar();
+			$this->load->view('home/single', $data);
+		} else {
+			$data['perusahaan'] = $this->user->getPerusahaan($idPerusahaan);
+			$data['lowongan'] = $this->lowongan->getLowongan('',0,0,$idPerusahaan);
+			$this->load->view('home/perusahaan', $data);
+		}
+	}
+
 	public function apply($idLowongan, $idMember)
 	{
 		$data['userMasuk'] = $this->data;
@@ -192,18 +231,18 @@ class Home extends CI_Controller {
 			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
 			redirect('login');
 		}
-		$lowongan = $this->lowongan->getLowongan($idLowongan);
-		
-		$kuotaBaru = $lowongan[0]->kuota - 1;
-		if ($lowongan[0]->kuota == 0) {
-			$status = 'tutup';
+		$upload = $this->lowongan->uploadCV();
+		if ($upload['result']=='success') {
+			$this->lowongan->apply($idLowongan, $idMember, $upload);
+			$this->session->set_flashdata('applied', 'Anda Telah Berhasil Apply Pekerjaan '.$lowongan[0]->lowongan);
+			redirect('home');
 		} else {
-			$status = '';
+			$data['lowongan'] = $this->lowongan->getLowongan($idLowongan);
+			$data['lowonganTerkait'] = $this->lowongan->getLowongan('', $idLowongan, $data['lowongan'][0]->fkKategori);
+			$data['pendaftar'] = $this->lowongan->getPendaftar();
+			$data['error'] = $upload['error'];
+			$this->load->view('home/single', $data);
 		}
-		$this->lowongan->apply($idLowongan, $idMember);
-		$this->lowongan->updateKuotaLowongan($idLowongan, $kuotaBaru, $status);
-		$this->session->set_flashdata('applied', 'Anda Telah Berhasil Apply Pekerjaan '.$lowongan[0]->lowongan);
-		redirect('home');
 	}
 
 	public function lowongan()
@@ -320,14 +359,27 @@ class Home extends CI_Controller {
 		$this->load->view('home/profil_baru', $data);
 	}
 
-	public function verifikasi($idPendaftar)
+	public function verifikasi($idLowongan, $idPendaftar, $keterangan)
 	{
 		$data['userMasuk'] = $this->data;
 		if ($data['userMasuk'][0]->level != 3) {
 			$this->session->set_flashdata('acl', 'Silahkan Login Dahulu!!!!!');
 			redirect('login');
 		}
-		$this->lowongan->verifikasiPendaftar($idPendaftar);
+		if ($keterangan=='terima') {
+			$lowongan = $this->lowongan->getLowongan($idLowongan);
+			$kuotaBaru = $lowongan[0]->kuota - 1;
+			if ($kuotaBaru < 1) {
+				$status = 'tutup';
+				$kuotaBaru = 0;
+			} else {
+				$status = '';
+			}
+			$this->lowongan->updateKuotaLowongan($idLowongan, $kuotaBaru, $status);
+			$this->lowongan->verifikasiPendaftar($idPendaftar, $keterangan);
+		} else {
+			$this->lowongan->verifikasiPendaftar($idPendaftar, $keterangan);
+		}
 		$data['lowongan'] = $this->lowongan->getPendaftarLowongan('', $idPendaftar);
 		redirect('home/pendaftar/'.$data['lowongan'][0]->idLowongan);
 	}

@@ -58,16 +58,19 @@ $acl = array(
 	/* WELCOME */
 
 	'home/index' => array(
-		'public' => true,
-		'1' => true,
-		'2' => true,
-		'3' => true
+		'public' => true
 	),
 	'home/print' => array(
 		'public' => false,
-		1 => true,
-		2 => false,
-		3 => false
+		'1' => true,
+		'2' => false,
+		'3' => false
+	),
+	'home/lowongan' => array(
+		'public' => false,
+		'1' => false,
+		'2' => true,
+		'3' => true
 	),
 
 );

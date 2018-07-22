@@ -22,10 +22,17 @@
 				</div>
 			</div>
 		</section>
-		<!-- End banner Area -->	
+		<!-- End banner Area -->
 
 		<!-- Start post Area -->
 		<section class="post-area section-gap">
+			<?php if (isset($error)): ?>
+			<div class="container">
+				<div class="col-md-12 text-danger text-center">
+					<h2 class="text-danger"><?= $error ?></h2>
+				</div>
+			</div>
+			<?php endif ?>
 			<div class="container">
 				<div class="row justify-content-center d-flex">
 					<div class="col-lg-8 post-list">
@@ -53,7 +60,7 @@
 											<?php if ($terdaftar): ?>
 												<li><a href="#">Applied</a></li>										
 											<?php else: ?>
-												<li><a href="<?= base_url('index.php/home/apply/'.$lowongan[0]->idLowongan.'/'.$userMasuk[0]->idMember) ?>">Apply</a></li>
+												<li><a class="" data-toggle="modal" href='#modal-id'>Apply</a></li>
 											<?php endif ?>
 										<?php endif ?>
 										<li><a href="<?= site_url('home/single/'.$this->uri->segment(3).'/'.$lowongan[0]->idPerusahaan) ?>">Profil Perusahaan</a></li>
@@ -100,23 +107,25 @@
 		</section>
 		<!-- End post Area -->
 
-
-		<!-- Start callto-action Area -->
-		<!-- <section class="callto-action-area section-gap">
-			<div class="container">
-				<div class="row d-flex justify-content-center">
-					<div class="menu-content col-lg-9">
-						<div class="title text-center">
-							<h1 class="mb-10 text-white">Join us today without any hesitation</h1>
-							<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-							<a class="primary-btn" href="#">I am a Candidate</a>
-							<a class="primary-btn" href="#">We are an Employer</a>
-						</div>
+		<div class="modal fade" id="modal-id">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<?= form_open_multipart(base_url('index.php/home/apply/'.$lowongan[0]->idLowongan.'/'.$userMasuk[0]->idMember)); ?>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"> Select your CV</h4>
 					</div>
-				</div>	
-			</div>	
-		</section> -->
-		<!-- End calto-action Area -->
+					<div class="modal-body">
+						<input type="file" name="cv" placeholder="Select CV" class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<input type="submit" value="Apply" name="submit" class="btn btn-primary">
+					</div>
+					<?= form_close(); ?>
+				</div>
+			</div>
+		</div>
 
 		<?php include 'foot.php'; ?>
 	</body>
